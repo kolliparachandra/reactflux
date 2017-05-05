@@ -52351,6 +52351,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = require('react-router-dom');
+
 var _authorApi = require('../../api/authorApi');
 
 var _authorApi2 = _interopRequireDefault(_authorApi);
@@ -52396,6 +52398,11 @@ var Authors = function (_React$Component) {
                     null,
                     'Authors'
                 ),
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: 'addAuthor', className: 'btn btn-default' },
+                    'Add Author'
+                ),
                 _react2.default.createElement(_authorList2.default, { authors: this.state.authors })
             );
         }
@@ -52406,7 +52413,7 @@ var Authors = function (_React$Component) {
 
 exports.default = Authors;
 
-},{"../../api/authorApi":226,"./authorList":232,"react":221}],234:[function(require,module,exports){
+},{"../../api/authorApi":226,"./authorList":232,"react":221,"react-router-dom":182}],234:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

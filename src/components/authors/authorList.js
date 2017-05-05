@@ -11,7 +11,7 @@ export default class AuthorList extends React.Component{
         }
     render(){
           return(
-            <table className='table'>
+             <table className='table'>
             <thead>
             <th>ID</th>
             <th>Name</th>
@@ -20,7 +20,7 @@ export default class AuthorList extends React.Component{
                 {this.props.authors.map(this.createAuthorRow,this)}
             </tbody>
             </table>
-        )
+         )
     }
 }
 AuthorList.propTypes={
