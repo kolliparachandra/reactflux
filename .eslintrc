@@ -1,4 +1,5 @@
 {
+  "extends": "react",
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true
@@ -18,7 +19,7 @@
     "no-lone-blocks": 2
   },
   "globals": {
-    jQuery: true,
+     jQuery: true,
     $: true
   }
 }

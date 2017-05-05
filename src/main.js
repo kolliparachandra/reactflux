@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app';
-import {HashRouter,Route,Link,Switch,Redirect} from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import Home from './components/homePage';
 import About from './components/about/aboutPage';
 import Authors from './components/authors/authorPage';
