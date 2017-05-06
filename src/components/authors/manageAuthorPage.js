@@ -10,6 +10,15 @@ class AddAuthor extends React.Component{
       this.setAuthorState = this.setAuthorState.bind(this);
       this.saveAuthor = this.saveAuthor.bind(this);
   }
+
+  componentWillMount(){
+      let authorId = this.props.match.params.id;
+      if(authorId){
+          this.setState({author:AuthorApi.getAuthorById(authorId)})
+      }
+  }
+
+
   
   authorFormIsValid(){
       let formValid = true;
@@ -25,17 +34,20 @@ class AddAuthor extends React.Component{
       }
 
        this.setState({errors:this.state.errors})
+       return formValid;
   }
 
   saveAuthor(event){
       event.preventDefault();
-      if(!this.authorFormIsValid())
-      return;
-      AuthorApi.saveAuthor(this.state.author);
-      toastr.success('Author saved');
       this.setState({
             isBlocking: false
           })
+      if(!this.authorFormIsValid())
+      return;
+      
+      AuthorApi.saveAuthor(this.state.author);
+      toastr.success('Author saved');
+      
       this.props.history.push('/authors');
       
   }
@@ -50,7 +62,7 @@ class AddAuthor extends React.Component{
   }
     render(){
         return(
-            <AuthorForm author={this.state.author} onChange={this.setAuthorState} onSave={this.saveAuthor} errors={this.state.errors} isBlocking={this.state.isBlocking}/>
+            <AuthorForm author={this.state.author} onChange={this.setAuthorState} onSave={this.saveAuthor} errors={this.state.errors} />
         )
     }
 }

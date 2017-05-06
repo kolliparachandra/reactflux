@@ -51980,7 +51980,7 @@ var NotFoundPage = function (_React$Component) {
                     null,
                     _react2.default.createElement(
                         _reactRouterDom.Link,
-                        { to: 'root' },
+                        { to: '/' },
                         'Back to home'
                     )
                 )
@@ -52218,13 +52218,7 @@ var AuthorForm = function (_React$Component) {
                                                                            error: this.props.errors.lastName
                                                             }),
                                                             _react2.default.createElement('br', null),
-                                                            _react2.default.createElement('input', { type: 'submit', value: 'Save', className: 'btn btn-default', onClick: this.props.onSave }),
-                                                            _react2.default.createElement(_reactRouterDom.Prompt, {
-                                                                           when: this.props.isBlocking,
-                                                                           message: function message(location) {
-                                                                                          return 'Are you sure you want to go to ' + location.pathname;
-                                                                           }
-                                                            })
+                                                            _react2.default.createElement('input', { type: 'submit', value: 'Save', className: 'btn btn-default', onClick: this.props.onSave })
                                              );
                               }
                }]);
@@ -52259,6 +52253,8 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -52286,8 +52282,8 @@ var AuthorList = function (_React$Component) {
                     'td',
                     null,
                     _react2.default.createElement(
-                        'a',
-                        { href: '/#authors/' + author.id },
+                        _reactRouterDom.Link,
+                        { to: '/authors/' + author.id },
                         author.id
                     )
                 ),
@@ -52338,7 +52334,7 @@ AuthorList.propTypes = {
     authors: _propTypes2.default.array.isRequired
 };
 
-},{"prop-types":42,"react":221}],233:[function(require,module,exports){
+},{"prop-types":42,"react":221,"react-router-dom":182}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52463,6 +52459,14 @@ var AddAuthor = function (_React$Component) {
     }
 
     _createClass(AddAuthor, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var authorId = this.props.match.params.id;
+            if (authorId) {
+                this.setState({ author: _authorApi2.default.getAuthorById(authorId) });
+            }
+        }
+    }, {
         key: 'authorFormIsValid',
         value: function authorFormIsValid() {
             var formValid = true;
@@ -52478,17 +52482,20 @@ var AddAuthor = function (_React$Component) {
             }
 
             this.setState({ errors: this.state.errors });
+            return formValid;
         }
     }, {
         key: 'saveAuthor',
         value: function saveAuthor(event) {
             event.preventDefault();
-            if (!this.authorFormIsValid()) return;
-            _authorApi2.default.saveAuthor(this.state.author);
-            _toastr2.default.success('Author saved');
             this.setState({
                 isBlocking: false
             });
+            if (!this.authorFormIsValid()) return;
+
+            _authorApi2.default.saveAuthor(this.state.author);
+            _toastr2.default.success('Author saved');
+
             this.props.history.push('/authors');
         }
     }, {
@@ -52505,7 +52512,7 @@ var AddAuthor = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_authorForm2.default, { author: this.state.author, onChange: this.setAuthorState, onSave: this.saveAuthor, errors: this.state.errors, isBlocking: this.state.isBlocking });
+            return _react2.default.createElement(_authorForm2.default, { author: this.state.author, onChange: this.setAuthorState, onSave: this.saveAuthor, errors: this.state.errors });
         }
     }]);
 
@@ -52803,10 +52810,19 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(
     _app2.default,
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _homePage2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/authors', component: _authorPage2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _aboutPage2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/addAuthor', component: _manageAuthorPage2.default })
+    _react2.default.createElement(
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _homePage2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/authors', component: _authorPage2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/authors/:id', component: _manageAuthorPage2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _aboutPage2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/addAuthor', component: _manageAuthorPage2.default }),
+      _react2.default.createElement(_reactRouterDom.Redirect, { from: 'about-us', to: 'about' }),
+      _react2.default.createElement(_reactRouterDom.Redirect, { from: 'awthurs', to: 'authors' }),
+      _react2.default.createElement(_reactRouterDom.Redirect, { from: 'about/*', to: 'about' }),
+      _react2.default.createElement(_reactRouterDom.Route, { component: _o2.default })
+    )
   )
 ), document.getElementById('app'));
 

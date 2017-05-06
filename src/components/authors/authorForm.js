@@ -27,12 +27,12 @@ export default class AuthorForm extends React.Component{
                     <br />
 
 				<input type="submit" value="Save" className="btn btn-default" onClick={this.props.onSave} />
-                <Prompt
+                {/*<Prompt
           when={this.props.isBlocking}
           message={location => (
             `Are you sure you want to go to ${location.pathname}`
           )}
-        />
+        />*/}
 			</form>
         )
     }

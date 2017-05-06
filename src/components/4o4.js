@@ -5,7 +5,7 @@ export default class NotFoundPage extends React.Component{
         return(
             <div>
             <h1>Page not found</h1>
-            <p><Link to='root'>Back to home</Link></p>
+            <p><Link to='/'>Back to home</Link></p>
             </div>
         )
     }
